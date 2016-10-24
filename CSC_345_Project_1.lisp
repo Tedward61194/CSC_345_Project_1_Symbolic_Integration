@@ -1,3 +1,8 @@
+;;;; Name: Edward (Ted) Segal
+;;;; Date: 10/24/2016
+;;;; Project: CSC_345_Project_1 : Symbolic_Integration
+
+;;; INTEGRATION FUNCTIONS
 (defun integrate (F V &optional lo hi)
   (def-integral (indef-integral F V) lo hi))
 
@@ -12,7 +17,9 @@
     ......  ; else return the definite integral
     ))
 
-;;--------------------------------------------
+
+;;(E)BNF
+;;=============================================
 
 ;;; SYMBOLS
 (defconstant variable-symbols '(U V W X Y Z))
