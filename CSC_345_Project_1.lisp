@@ -71,13 +71,28 @@
 
 (defun negative-p (F)
   "t if F is negative"
-  (cond ((and (number-p F) (< F 0)) t)
-	((number-p F) nil)
+  (cond ((and (number-p F) (< F 0)) t)  ;;if a number and is less than 0
+	((number-p F) nil)              ;; clear all other predicate tags
 	((variable-p F) nil)
 	((difference-p F) nil)
 	((and (equal (negative-operator F) negative-symbol)
-	      (not (equal (negative-operand F) negative-symbol))) t)))
+	      (not (equal (negative-operand F) negative-symbol)))
+	 t)))
 
+(defun nested-negative-p (F)
+  "t if F has more than 1 negative-symbol"
+  (labels ((nested-negative-p-helper (F L)
+				     (cond ((endp F) (= (length L) 1))
+				     ((equal (first F) negative-symbol) (nested-negative-p-helper (rest F) L))    ;; if First is '-' ...
+				     (t (nested-negative-p-helper (rest F) (cons (first F) L))))))                ;; return t and continue to cdr
+    ;; clear all other p-tags
+    (cond ((number-p F) nil)
+	((variable-p F) nil)
+	((negative-p F) nil)
+	((difference-p F) nil)
+	((not (listp F)) nil)
+	(t (nested-negative-p-helper F '()))))
+  )
 ;;--------------------------------------------
 
 ;; CONSTRUCTORS
