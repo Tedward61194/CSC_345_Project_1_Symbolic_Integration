@@ -10,15 +10,41 @@
 
 (defun indef-integral (F V)
   "Returns the indefinite integral of an argument Function"
-  (cond ((number-p F) (make-product FV))
-	((variable-p F)(make-product 1/2 (make-power F 2)))
-	;90% of work
-	))
+  (labels ((indef-integral-helper (F V)
+				  (cond ((number-p F) (make-product F V))
+					((variable-p F)(make-product 1/2 (make-power F 2)))
+					((variable-p F) (integrate (make-power F 1) V))
+					((sum-p F) (make-sum (integrate (sum-operand-1 F) V)
+							     (integrate (sum-operand-2 F) V)))
+					((difference-p F) (make-difference (integrate (difference-operand-1 F) V)
+									   (integrate (difference-operand-2 F) V)))
+					((and (power-p F)
+					      (not (= (power-operand-2 F) -1)))
+					 (make-quotient (make-power V (make-sum (power-operand-2 F) 1))
+							(make-sum (power-operand-2 F) 1)))
+					((and (power-p F)
+					      (equal (power-operand-2 F) -1) (make-log (power-operand-1 F)))))))
+    (cond ((not (variable-p V)) nil)
+	  ((nested-negative-p F) (indef-integral-helper (make-negative-simplified F) V))
+	  (t (indef-integral-helper F)))))
+					
 (defun def-integral (F lo hi)
-  (if () ; no values supplied for lo and hi
-      F     ; return the indefinate integral
-    ......  ; else return the definite integral
-    ))
+  "if there is a lo and hi value, return the definite integral of F"
+  (if (not (and (number-p lo) (number-p hi)))      ; no values suppied for lo and hi
+      F                                            ; return the indefinite integral
+    (eval (make-difference (my-replace V hi F)     ; else return the definite integral
+			   (my-replace V lo F)))))
+
+(defun my-replace (x y L)
+  "Replaces all occurences of e1 with e2 within L"
+  (labels ((my-replace-helper (x y L)
+			      (cond ((endp L) nil)
+				    ((equal (first L) x) (cons y (my-replace x y (rest L))))
+				    ((listp (first L)) (cons (my-replace x y (first L))
+							     (my-replace x y (rest L))))
+				    (t (cons (first L) (my-replace x y (rest L)))))))
+	  (cond ((variable-p L) (first (my-replace-helper x y (list L))))
+		(t (my-replace-helper x y L)))))
 
 
 ;;(E)BNF
