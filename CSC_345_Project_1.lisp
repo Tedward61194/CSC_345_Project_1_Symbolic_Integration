@@ -201,7 +201,7 @@
 	((equal F G) 1)
 	((and (number-p F) (number-p G)) (/ F G))  ;; not a special case
 	(t (list quotient-symbol F G))))
-e
+
 (defun make-log (V)
   "Makes log of arg"
   (cond ((variable-p V) (list log-symbol V))))
