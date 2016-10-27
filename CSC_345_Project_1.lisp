@@ -1,5 +1,5 @@
 ;;; NAME: Teddy (Edward) Segal
-;;; PROJECT: integrate.lisp
+;;; File: integrate.lisp
 ;;; DATE: 10/27/16
 
 
@@ -14,6 +14,7 @@
   "Returns indefinite integral of function"
   (labels ((indef-integral-aux (F V)
 	     (cond ((number-p F) (make-product F V))
+		   ((variable-p F) (make-product 1/2 (make-power F 2)))
 		   ((negative-p F) (make-negative (integrate (make-negative F) V)))
 		   ((variable-p F) (integrate (make-power F 1) V))
 		   ((sum-p F)(make-sum (integrate (sum-operand-1 F) V)
@@ -26,7 +27,7 @@
 		   ((and (power-p F)
 			 (equal (power-operand-2 F) -1) (make-log (power-operand-1 F)))))))
     (cond ((not (variable-p V)) nil)
-	  ((nested-negative-p F) (indef-integral-aux (make-reduced-negative F) V))
+	  ((nested-negative-p F) (indef-integral-aux (make-negative-simplified F) V))
 	  (t (indef-integral-aux F V)))))
 
 (defun def-integral(F V lo hi)
@@ -143,7 +144,7 @@
 ;;;CONSTRUCTORS
 
 (defun make-variable (V)
-  "Function seems 'trivial,' but is included for the completeness fo the abstraction"
+ppp  "Function seems 'trivial,' but is included for the completeness fo the abstraction"
   V)
 
 (defun make-negative (F)

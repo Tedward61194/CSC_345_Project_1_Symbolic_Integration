@@ -1,0 +1,13 @@
+;;; NAME: Teddy (Edward) Segal
+;;; PROJECT: CSC_345_Project_1_Integration_In_Lisp
+;;; DATE: 10/27/16
+
+All files can be found on Taz at: /home/es813217/CSC_345/Project1
+
+Files included are:
+   - CSC_345_Project1.lisp
+   - CSC_345_Project1_Final_Output
+   - Bug_Report
+   - Technical_Information
+
+To run, open CSC_345_Project1.lisp in emacs, open an instance of SLIME with the F9 hotkey, load each function with F10, then call a loaded function in SLIME providing the necessary arguments

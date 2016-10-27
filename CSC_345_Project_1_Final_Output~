@@ -1,0 +1,66 @@
+%%% This file has been annotated. All annotations begin with %%%
+
+%%% NAME: Teddy (Edward) Segal
+%%% File: CSC_345_Project_1_Final_Output
+%%% DATE: 10/27/16
+
+
+> CL-USER> (integrate '1 'x)						%%% TEST 1
+X
+
+CL-USER> (integrate '1 'y 1 4)						%%% TEST 2
+3
+
+CL-USER> (integrate 'z 'z)						%%% TEST 3
+(* 1/2 (EXPT Z 2))
+
+CL-USER> (integrate '(+ x 0) 'x)					%%% TEST 4
+(* 1/2 (EXPT X 2))
+
+CL-USER> (integrate '(- x) 'x 1 3)					%%% TEST 5
+-4
+
+CL-USER> (integrate '(- - x) 'x) 1 4					%%% TEST 6
+4
+
+CL-USER> (integrate '(- x) 'x)						%%% TEST 7
+(- (* 1/2 (EXPT X 2)))
+
+CL-USER> (integrate '(- - x) 'x)					%%% TEST 8
+(* 1/2 (EXPT X 2))
+
+CL-USER> (integrate '(- - - x) 'x)					%%% TEST 9
+(- (* 1/2 (EXPT X 2)))
+
+CL-USER> (integrate '(+ x (- x)) 'x)					%%% TEST 10
+0
+
+CL-USER> (integrate '(- (+ (- - x) x)) 'x 1 4)				%%% TEST 11
+-15
+
+CL-USER> (integrate '(+ (+ (- - x) (+ x 3)) 2) 'x 2 6)			%%% TEST 12
+52
+
+CL-USER> (integrate '(- x (expt x 3)) 'x)				%%% TEST 13
+(- (* 1/2 (EXPT X 2)) (/ (EXPT X 4) 4))
+
+CL-USER> (integrate '(-x (expt x 3)) 'x 2 5)				%%% TEST 14
+0
+
+CL-USER> (integrate '(+ (+ x (- - - x)) (expt x 3)) 'x)			%%% TEST 15
+(/ (EXPT X 4) 4)
+
+CL-USER> (integrate '(+ (- x (- x)) (expt x 3)) 'x 2 3)			%%% TEST 16
+85/4
+
+CL-USER> (integrate '(expt x -1) 'x)					%%% TEST 17
+(LOG X)
+
+CL-USER> (integrate '(expt x -1) 'x 3 45)				%%% TEST 18
+2.7080503
+
+CL-USER> (integrate '(+ (+ x (- 5 x)) (expt x -1)) 'x)			%%% TEST 19
+(+ (+ (* 1/2 (EXPT X 2)) (- (* 5 X) (* 1/2 (EXPT X 2)))) (LOG X))
+
+CL-USER> (integrate '(+ (+ x (- 5 x)) (expt x -1)) 'x 5 217)		%%% TEST 20
+1063.7704
